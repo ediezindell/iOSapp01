@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:multipage.xcodeproj">
+      location = "group:/Users/yinoue/tmp/apps/multipage/multipage/SettingsViewController.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

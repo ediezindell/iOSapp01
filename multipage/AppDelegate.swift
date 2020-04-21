@@ -9,10 +9,15 @@
 import UIKit
 import CoreData
 
+var settingFont = "PingFangTC-Light"
+var settingFontColor = "8888FF"
+var settingFontSize = 16
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
+    var Text: String = "default"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
