@@ -18,41 +18,63 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(memos.count)
         return memos.count
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let id = indexPath.row
+        let memo = memos[id]
+        let title = memo.title
+        let body = memo.body
+        toEditPage(title: title, body: body, id: id)
+        print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell;
         cell = tableView.dequeueReusableCell(withIdentifier: "memoListCell", for: indexPath)
 
         //各要素にはタグでアクセスする
-        let settingLabel: UILabel = cell.viewWithTag(1)! as! UILabel
-        settingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-        settingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
-        settingLabel.text = memos[indexPath.row].title
+        let titleLabel: UILabel = cell.viewWithTag(1)! as! UILabel
+        print(titleLabel)
+        titleLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+        titleLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        titleLabel.text = memos[indexPath.row].title
 
         return cell
     }
     
     @IBOutlet weak var newTitleField: UITextField!
     @IBAction func addButton(_ sender: Any) {
-        let newTitle = newTitleField.text!
-        
-        let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
+        var newTitle = newTitleField.text!
         if newTitle == "" {
-            nextViewController.titleText = "無題"
-        } else {
-            nextViewController.titleText = newTitle
+            newTitle = "無題"
         }
-//        nextViewController.delegate = self
-        self.navigationController?.pushViewController(nextViewController, animated: true)
-        
+
+        toEditPage(title: newTitle, body: "ここに内容を入力します", id: -1)
     }
+    func toEditPage(title: String, body: String, id: Int) {
+        let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
+        nextViewController.titleText = title
+        nextViewController.bodyText = body
+        //        nextViewController.delegate = self
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+
+    }
+    @IBOutlet weak var memoListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        memoListTable.frame = view.frame
+        memoListTable.dataSource = self
+        memoListTable.delegate = self
+        memoListTable.tableFooterView = UIView(frame: .zero)
     }
     
     @IBAction func backFromEdit(segue: UIStoryboardSegue) {
+        memoListTable?.reloadData()
     }
     @IBAction func backFromSettings(segue: UIStoryboardSegue) {
     }

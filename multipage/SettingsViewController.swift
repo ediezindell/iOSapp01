@@ -123,7 +123,6 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 
         print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
         tableView.deselectRow(at: indexPath, animated: true)
-
     }
     
     // UIFontPickerViewControllerDelegate - 選択後
