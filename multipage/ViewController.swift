@@ -8,36 +8,50 @@
 
 import UIKit
 
-class ViewController: UIViewController, EditViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditViewControllerDelegate {
 
-    @IBOutlet weak var editField: UITextField!
-    @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var settingButton: UIBarButtonItem!
-    @IBAction func tapEditButton(_ sender: UIButton) {
-        let view = storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
-        if editField.text! != "" {
-            view.text = editField.text!
-        }
-        view.delegate = self
-        present(view, animated: true, completion: nil)
+    func editDidFinished(title: String?, body: String?) {
+        let newMemo: MemoObj! = MemoObj(title: title!, body: body!)
+        memos.append(newMemo)
+        print("saved")
+        print(memos)
     }
     
-    func editDidFinished(modalText text: String?) {
-        editField.text = text
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return memos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell;
+        cell = tableView.dequeueReusableCell(withIdentifier: "memoListCell", for: indexPath)
+
+        //各要素にはタグでアクセスする
+        let settingLabel: UILabel = cell.viewWithTag(1)! as! UILabel
+        settingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+        settingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        settingLabel.text = memos[indexPath.row].title
+
+        return cell
+    }
+    
+    @IBOutlet weak var newTitleField: UITextField!
+    @IBAction func addButton(_ sender: Any) {
+        let newTitle = newTitleField.text!
+        
+        let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
+        if newTitle == "" {
+            nextViewController.titleText = "無題"
+        } else {
+            nextViewController.titleText = newTitle
+        }
+//        nextViewController.delegate = self
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        editField.font = UIFont(name: settingFont, size: (editField.font?.pointSize)!)
-//        editButton.titleLabel?.font = UIFont(name: settingFont, size: (editButton.titleLabel?.font.pointSize)!)!
-   }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        editField.text = appDelegate.Text
     }
-
+    
     @IBAction func backFromEdit(segue: UIStoryboardSegue) {
     }
     @IBAction func backFromSettings(segue: UIStoryboardSegue) {

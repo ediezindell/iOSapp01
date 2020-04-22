@@ -72,12 +72,12 @@
 			children = (
 				630F71F124483F1F00B4A6E2 /* AppDelegate.swift */,
 				630F71F324483F1F00B4A6E2 /* SceneDelegate.swift */,
-				630F72082448454300B4A6E2 /* EditViewController.swift */,
 				630F71FD24483F2100B4A6E2 /* Assets.xcassets */,
 				6367146724496E4900352D34 /* ym.png */,
 				630F720A24484FE800B4A6E2 /* Main.storyboard */,
 				630F71FF24483F2100B4A6E2 /* LaunchScreen.storyboard */,
 				630F71F524483F1F00B4A6E2 /* ViewController.swift */,
+				630F72082448454300B4A6E2 /* EditViewController.swift */,
 				630F720F2449470E00B4A6E2 /* SettingsViewController.swift */,
 				63AF67BA244D2EA9007380C2 /* SettingColorViewController.swift */,
 				63AF67BC244DA08D007380C2 /* SettingSizeViewController.swift */,

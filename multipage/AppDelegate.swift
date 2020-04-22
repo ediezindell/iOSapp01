@@ -13,11 +13,15 @@ var settingFont = "PingFangTC-Light"
 var settingFontColor = "8888FF"
 var settingFontSize = 16
 
+struct MemoObj {
+    var title: String
+    var body: String
+}
+
+var memos: [MemoObj] = []
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-    var Text: String = "default"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -37,6 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         useSettings()
 
+        // メモデータ
+        let loadedMemos = UserDefaults.standard.object(forKey: "MEMO")
+        if (loadedMemos as? [MemoObj] != nil) {
+            memos = loadedMemos as! [MemoObj]
+        } else {
+            let defaultMemo: MemoObj! = MemoObj(title: "タイトル", body: "ここに内容を入力します")
+            memos.append(defaultMemo)
+        }
+        
         return true
     }
 

@@ -9,22 +9,43 @@
 import UIKit
 
 protocol EditViewControllerDelegate {
-    func editDidFinished(modalText: String?)
+    func editDidFinished(title: String?, body: String?)
 }
 
-class EditViewController: UIViewController {
+class EditViewController: UIViewController, UITextViewDelegate {
 
-    var text = "めも"
-    var delegate: EditViewControllerDelegate! = nil
-    @IBOutlet weak var editText: UITextField!
-    @IBAction func tapButton(_ sender: UIButton) {
-        delegate.editDidFinished(modalText: editText.text)
-        dismiss(animated: true, completion: nil)
+    var titleText = "title"
+    var bodyText = "ここに内容を入力"
+//    var delegate: EditViewControllerDelegate! = nil
+    var nowEditId = -1 // -1: 未選択
+
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var titleNavigationItem: UINavigationItem!
+    @IBOutlet weak var bodyTextView: UITextView!
+
+    @IBAction func saveButton(_ sender: UIButton) {
+        let newTitle = titleText
+        let newBody = bodyTextView.text!
+        let newMemo: MemoObj! = MemoObj(title: newTitle, body: newBody)
+        memos.append(newMemo)
+        print("saved")
+        // 移動？
+        
+//        delegate.editDidFinished(title: newTitle, body: newBody)
+//        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        editText.text = text
+        let count = bodyText.count
+        self.title = "\(titleText) (文字数: \(String(count)))"
+        bodyTextView.text = bodyText
+        bodyTextView.delegate = self
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        let count = textView.text.count
+        self.title = "\(titleText) (文字数: \(String(count)))"
     }
 
 }
