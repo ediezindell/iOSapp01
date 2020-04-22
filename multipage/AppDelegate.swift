@@ -21,9 +21,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        // 読み込み
+        let loadedSettingFont = UserDefaults.standard.object(forKey: "SETTING_FONT")
+        if (loadedSettingFont as? String != nil) {
+            settingFont = loadedSettingFont as! String
+        }
+        let loadedSettingFontColor = UserDefaults.standard.object(forKey: "SETTING_FONT_COLOR")
+        if (loadedSettingFontColor as? String != nil) {
+            settingFontColor = loadedSettingFontColor as! String
+        }
+        let loadedSettingFontSize = UserDefaults.standard.object(forKey: "SETTING_FONT_SIZE")
+        if (loadedSettingFontSize as? Int != nil) {
+            settingFontSize = loadedSettingFontSize as! Int
+        }
+        useSettings()
+
         return true
     }
 
+    func useSettings() {
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        
+        UILabel.appearance().textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        UILabel.appearance().font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

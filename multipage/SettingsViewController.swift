@@ -50,13 +50,14 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 
         //各要素にはタグでアクセスする
         let nowSettingLabel: UILabel = cell.viewWithTag(2)! as! UILabel
-        print("param: \(String(describing: settingData[indexPath.section][indexPath.row]))")
-        if indexPath.row == 0 || indexPath.row == 1 {
-            nowSettingLabel.text = settingData[indexPath.section][indexPath.row] as? String
-        } else {
+        // フォントサイズ
+        if indexPath.row == 2 {
             nowSettingLabel.text = "\(settingData[indexPath.section][indexPath.row])px"
+        } else {
+            nowSettingLabel.text = settingData[indexPath.section][indexPath.row] as? String
         }
         nowSettingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+        nowSettingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
 
         return cell
     }
@@ -66,7 +67,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 //
 //        sectionLabel.font = UIFont(name: settingFont, size: (sectionLabel.font.pointSize))
 //        sectionLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
-//        sectionLabel.text = sectionData[section]
+//        sectionLabel.text = settingSections[section]
 //
 //        let headerView = UIView()
 //        headerView.addSubview(sectionLabel)
@@ -75,14 +76,19 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 //    }
         
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+//        useSettings()
         settingData[0] = [settingFont, settingFontColor, String(settingFontSize)]
 //        settingData[1] = UIFont.familyNames
-        
+//        UILabel.apperance().font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+
         settingTable.frame = view.frame
         settingTable.dataSource = self
         settingTable.delegate = self
         settingTable.tableFooterView = UIView(frame: .zero)
+            
+//        self.hoge?.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+//        self.hoge?.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
     }
     
     @IBOutlet weak var settingTable: UITableView!

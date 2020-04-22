@@ -27,22 +27,9 @@ class ViewController: UIViewController, EditViewControllerDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 読み込み
-        let loadedSettingFont = UserDefaults.standard.object(forKey: "SETTING_FONT")
-        if (loadedSettingFont as? String != nil) {
-            settingFont = loadedSettingFont as! String
-        }
-        let loadedSettingFontColor = UserDefaults.standard.object(forKey: "SETTING_FONT_COLOR")
-        if (loadedSettingFontColor as? String != nil) {
-            settingFontColor = loadedSettingFontColor as! String
-        }
-        let loadedSettingFontSize = UserDefaults.standard.object(forKey: "SETTING_FONT_SIZE")
-        if (loadedSettingFontSize as? Int != nil) {
-            settingFontSize = loadedSettingFontSize as! Int
-        }
 
-        editField.font = UIFont(name: settingFont, size: (editField.font?.pointSize)!)
-        editButton.titleLabel?.font = UIFont(name: settingFont, size: (editButton.titleLabel?.font.pointSize)!)!
+//        editField.font = UIFont(name: settingFont, size: (editField.font?.pointSize)!)
+//        editButton.titleLabel?.font = UIFont(name: settingFont, size: (editButton.titleLabel?.font.pointSize)!)!
    }
     
     override func viewWillAppear(_ animated: Bool) {
