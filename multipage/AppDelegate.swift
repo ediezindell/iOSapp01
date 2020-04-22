@@ -16,6 +16,32 @@ var settingFontSize = 16
 struct MemoObj {
     var title: String
     var body: String
+    let created_at: String
+    var updated_at: String
+    init(title: String, body: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let now = dateFormatter.string(from: Date())
+
+        self.title = title
+        self.body = body
+        self.created_at = now
+        self.updated_at = now
+    }
+    mutating func updateTitle(title: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let now = dateFormatter.string(from: Date())
+        self.title = title
+        self.updated_at = now
+    }
+    mutating func updateBody(body: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        let now = dateFormatter.string(from: Date())
+        self.body = body
+        self.updated_at = now
+    }
 }
 
 var memos: [MemoObj] = []
@@ -42,11 +68,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         useSettings()
 
         // メモデータ
-        let loadedMemos = UserDefaults.standard.object(forKey: "MEMO")
-        if (loadedMemos as? [MemoObj] != nil) {
-            memos = loadedMemos as! [MemoObj]
+        let loadedEncodedMemoData = UserDefaults.standard.object(forKey: "MEMO")
+        var loadedMemos: [MemoObj] = []
+        if loadedEncodedMemoData as? Data != nil {
+            loadedMemos = NSKeyedUnarchiver.unarchiveObject(with: loadedEncodedMemoData as! Data) as! [MemoObj]
+            memos = loadedMemos
         } else {
-            let defaultMemo: MemoObj! = MemoObj(title: "タイトル", body: "ここに内容を入力します")
+            let defaultMemo: MemoObj! = MemoObj(
+                title: "タイトル",
+                body: "ここに内容を入力します"
+            )
             memos.append(defaultMemo)
         }
         

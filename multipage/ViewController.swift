@@ -11,10 +11,10 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditViewControllerDelegate {
 
     func editDidFinished(title: String?, body: String?) {
-        let newMemo: MemoObj! = MemoObj(title: title!, body: body!)
-        memos.append(newMemo)
-        print("saved")
-        print(memos)
+//        let newMemo: MemoObj! = MemoObj(title: title!, body: body!)
+//        memos.append(newMemo)
+//        print("saved")
+//        print(memos)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,10 +39,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         //各要素にはタグでアクセスする
         let titleLabel: UILabel = cell.viewWithTag(1)! as! UILabel
-        print(titleLabel)
         titleLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
         titleLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
         titleLabel.text = memos[indexPath.row].title
+
+        //各要素にはタグでアクセスする
+        let createdLabel: UILabel = cell.viewWithTag(2)! as! UILabel
+        let updatedLabel: UILabel = cell.viewWithTag(3)! as! UILabel
+        createdLabel.text = memos[indexPath.row].created_at
+        updatedLabel.text = memos[indexPath.row].updated_at
+        createdLabel.font = UIFont(name: settingFont, size: 10.0)
+        updatedLabel.font = UIFont(name: settingFont, size: 10.0)
 
         return cell
     }
@@ -60,9 +67,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
         nextViewController.titleText = title
         nextViewController.bodyText = body
+        nextViewController.nowEditId = id
         //        nextViewController.delegate = self
         self.navigationController?.pushViewController(nextViewController, animated: true)
-
     }
     @IBOutlet weak var memoListTable: UITableView!
     override func viewDidLoad() {
@@ -73,6 +80,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         memoListTable.tableFooterView = UIView(frame: .zero)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        memoListTable?.reloadData()
+    }
     @IBAction func backFromEdit(segue: UIStoryboardSegue) {
         memoListTable?.reloadData()
     }

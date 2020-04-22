@@ -24,17 +24,21 @@ class EditViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var bodyTextView: UITextView!
 
     @IBAction func saveButton(_ sender: UIButton) {
-        let newTitle = titleText
+        
         let newBody = bodyTextView.text!
-        let newMemo: MemoObj! = MemoObj(title: newTitle, body: newBody)
         if nowEditId == -1 {
+            let newTitle = titleText
+            let newMemo: MemoObj! = MemoObj(title: newTitle, body: newBody)
             memos.append(newMemo)
-        } else {
-            memos[nowEditId] = newMemo
+        } else if memos[nowEditId].body != newBody {
+            memos[nowEditId].updateBody(body: newBody)
         }
+//        UserDefaults.standard.set(memos, forKey: "MEMO")
+
         print("saved")
         // 移動？
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
+//        self.dismiss(animated: true, completion: nil)
         print("dismiss")
 
 //        delegate.editDidFinished(title: newTitle, body: newBody)
