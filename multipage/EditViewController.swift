@@ -41,6 +41,8 @@ class EditViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         checkCount(count: bodyText.count)
         bodyTextView.text = bodyText
+        bodyTextView.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        bodyTextView.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
         bodyTextView.delegate = self
     }
 

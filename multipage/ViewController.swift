@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
@@ -98,10 +98,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var newTitleField: UITextField!
     @IBAction func addButton(_ sender: Any) {
+        createNewMemo()
+    }
+    //
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        createNewMemo()
+        return true
+    }
+    func createNewMemo() {
         var newTitle = newTitleField.text!
         if newTitle == "" {
             newTitle = "無題"
         }
+        newTitleField.text = ""
         toEditPage(title: newTitle, body: "ここに内容を入力します", id: -1)
     }
     func toEditPage(title: String, body: String, id: Int) {
@@ -121,6 +130,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         memoListTable.tableFooterView = UIView(frame: .zero)
         memoListTable.allowsMultipleSelectionDuringEditing = true
         navigationItem.rightBarButtonItem = editButtonItem
+        newTitleField.delegate = self
+        hideKeyboardWhenTappedAround()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -138,5 +149,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func backFromSettings(segue: UIStoryboardSegue) {
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureObserver()  //Notification発行
+    }
+
+    // MARK: - Notification
+
+    /// Notification発行
+    func configureObserver() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(_:)),
+                                 name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(_:)),
+                                 name: UIResponder.keyboardWillHideNotification, object: nil)
+        print("Notificationを発行")
+    }
+
+    /// キーボードが表示時に画面をずらす。
+    @objc func keyboardWillShow(_ notification: Notification?) {
+        guard let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        UIView.animate(withDuration: duration) {
+            let transform = CGAffineTransform(translationX: 0, y: -(rect.size.height))
+            self.view.transform = transform
+        }
+        print("keyboardWillShowを実行")
+    }
+
+    /// キーボードが降りたら画面を戻す
+    @objc func keyboardWillHide(_ notification: Notification?) {
+        guard let duration = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? TimeInterval else { return }
+        UIView.animate(withDuration: duration) {
+            self.view.transform = CGAffineTransform.identity
+        }
+        print("keyboardWillHideを実行")
+    }
+    
 }
 
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.hideKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+}
