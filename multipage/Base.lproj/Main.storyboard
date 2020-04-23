@@ -94,7 +94,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="memoList" id="Ubb-9P-g1J"/>
+                    <navigationItem key="navigationItem" title="memoList" id="Ubb-9P-g1J">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="dK1-8X-Jac">
+                            <connections>
+                                <segue destination="QUV-QF-o5R" kind="show" id="niA-Zp-R1D"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="memoListTable" destination="yEM-6H-Dkk" id="WU8-lg-gVu"/>
                         <outlet property="newTitleField" destination="bP7-oX-VdY" id="CKg-aQ-3Hg"/>
