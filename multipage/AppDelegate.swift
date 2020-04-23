@@ -8,16 +8,18 @@
 
 import UIKit
 import CoreData
+import Foundation
 
 var settingFont = "PingFangTC-Light"
 var settingFontColor = "8888FF"
 var settingFontSize = 16
 
-struct MemoObj {
+class MemoObj: NSObject, NSCoding {
     var title: String
     var body: String
     let created_at: String
     var updated_at: String
+
     init(title: String, body: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
@@ -28,19 +30,35 @@ struct MemoObj {
         self.created_at = now
         self.updated_at = now
     }
-    mutating func updateTitle(title: String) {
+
+    func updateTitle(title: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let now = dateFormatter.string(from: Date())
         self.title = title
         self.updated_at = now
     }
-    mutating func updateBody(body: String) {
+
+    func updateBody(body: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let now = dateFormatter.string(from: Date())
         self.body = body
         self.updated_at = now
+    }
+
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(title, forKey: "title")
+        aCoder.encode(body, forKey: "body")
+        aCoder.encode(created_at, forKey: "created_at")
+        aCoder.encode(updated_at, forKey: "updated_at")
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        title = aDecoder.decodeObject(forKey: "title") as! String
+        body = aDecoder.decodeObject(forKey: "body") as! String
+        created_at = aDecoder.decodeObject(forKey: "created_at") as! String
+        updated_at = aDecoder.decodeObject(forKey: "updated_at") as! String
     }
 }
 
@@ -68,18 +86,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         useSettings()
 
         // メモデータ
-        let loadedEncodedMemoData = UserDefaults.standard.object(forKey: "MEMO")
-        var loadedMemos: [MemoObj] = []
-        if loadedEncodedMemoData as? Data != nil {
-            loadedMemos = NSKeyedUnarchiver.unarchiveObject(with: loadedEncodedMemoData as! Data) as! [MemoObj]
-            memos = loadedMemos
-        } else {
-            let defaultMemo: MemoObj! = MemoObj(
-                title: "タイトル",
-                body: "ここに内容を入力します"
-            )
-            memos.append(defaultMemo)
-        }
+        let loadedEncodedMemoData = UserDefaults.standard.object(forKey: "MEMO") as? Data
+        guard let m = loadedEncodedMemoData else { return false }
+        let unArchiveData = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(m)
+        memos = unArchiveData as? [MemoObj] ?? [MemoObj(
+                        title: "タイトル",
+                        body: "ここに内容を入力します"
+        )]
+
+//        let loadedEncodedMemoData = UserDefaults.standard.object(forKey: "MEMO")
+//        var loadedMemos: [MemoObj] = []
+//        if loadedEncodedMemoData as? Data != nil {
+//            loadedMemos = NSKeyedUnarchiver.unarchiveObject(with: loadedEncodedMemoData as! Data) as! [MemoObj]
+//            memos = loadedMemos
+//        } else {
+//            let defaultMemo: MemoObj! = MemoObj(
+//                title: "タイトル",
+//                body: "ここに内容を入力します"
+//            )
+//            memos.append(defaultMemo)
+//        }
         
         return true
     }
@@ -87,11 +113,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func useSettings() {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().barTintColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
-        
+//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
+//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
         UILabel.appearance().textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
         UILabel.appearance().font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-
     }
     
     // MARK: UISceneSession Lifecycle

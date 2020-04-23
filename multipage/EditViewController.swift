@@ -8,15 +8,10 @@
 
 import UIKit
 
-protocol EditViewControllerDelegate {
-    func editDidFinished(title: String?, body: String?)
-}
-
 class EditViewController: UIViewController, UITextViewDelegate {
 
     var titleText = "title"
     var bodyText = "ここに内容を入力"
-//    var delegate: EditViewControllerDelegate! = nil
     var nowEditId = -1 // -1: 未選択
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -33,16 +28,13 @@ class EditViewController: UIViewController, UITextViewDelegate {
         } else if memos[nowEditId].body != newBody {
             memos[nowEditId].updateBody(body: newBody)
         }
-//        UserDefaults.standard.set(memos, forKey: "MEMO")
-
-        print("saved")
-        // 移動？
+        // 保存
+        let encodedMemo = try? NSKeyedArchiver.archivedData(withRootObject: memos, requiringSecureCoding: false)
+        UserDefaults.standard.set(encodedMemo, forKey: "MEMO")
+        UserDefaults.standard.synchronize()
+        
+        // 移動
         self.navigationController?.popViewController(animated: true)
-//        self.dismiss(animated: true, completion: nil)
-        print("dismiss")
-
-//        delegate.editDidFinished(title: newTitle, body: newBody)
-//        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

@@ -20,6 +20,7 @@
 		6367146A2449804200352D34 /* UIColor+colorFromRGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636714692449804200352D34 /* UIColor+colorFromRGB.swift */; };
 		63AF67BB244D2EA9007380C2 /* SettingColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF67BA244D2EA9007380C2 /* SettingColorViewController.swift */; };
 		63AF67BD244DA08D007380C2 /* SettingSizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF67BC244DA08D007380C2 /* SettingSizeViewController.swift */; };
+		63B8949724511B6000F79841 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B8949624511B6000F79841 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		636714692449804200352D34 /* UIColor+colorFromRGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+colorFromRGB.swift"; sourceTree = "<group>"; };
 		63AF67BA244D2EA9007380C2 /* SettingColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingColorViewController.swift; sourceTree = "<group>"; };
 		63AF67BC244DA08D007380C2 /* SettingSizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSizeViewController.swift; sourceTree = "<group>"; };
+		63B8949624511B6000F79841 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				630F71F124483F1F00B4A6E2 /* AppDelegate.swift */,
+				63B8949624511B6000F79841 /* DataController.swift */,
 				630F71F324483F1F00B4A6E2 /* SceneDelegate.swift */,
 				630F71FD24483F2100B4A6E2 /* Assets.xcassets */,
 				6367146724496E4900352D34 /* ym.png */,
@@ -165,6 +168,7 @@
 				630F72092448454300B4A6E2 /* EditViewController.swift in Sources */,
 				630F71F624483F1F00B4A6E2 /* ViewController.swift in Sources */,
 				630F71F224483F1F00B4A6E2 /* AppDelegate.swift in Sources */,
+				63B8949724511B6000F79841 /* DataController.swift in Sources */,
 				630F71FC24483F1F00B4A6E2 /* multipage.xcdatamodeld in Sources */,
 				630F71F424483F1F00B4A6E2 /* SceneDelegate.swift in Sources */,
 				63AF67BB244D2EA9007380C2 /* SettingColorViewController.swift in Sources */,

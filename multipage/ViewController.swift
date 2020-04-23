@@ -8,28 +8,70 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    func editDidFinished(title: String?, body: String?) {
-//        let newMemo: MemoObj! = MemoObj(title: title!, body: body!)
-//        memos.append(newMemo)
-//        print("saved")
-//        print(memos)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        // シェアのアクションを設定する
+        let shareAction = UIContextualAction(style: .normal  , title: "share") {
+            (ctxAction, view, completionHandler) in
+             print("シェアを実行する")
+            completionHandler(true)
+        }
+        // シェアボタンのデザインを設定する
+        let shareImage = UIImage(systemName: "square.and.arrow.up")?.withTintColor(UIColor.white, renderingMode: .alwaysTemplate)
+        shareAction.image = shareImage
+        shareAction.backgroundColor = UIColor(red: 0/255, green: 125/255, blue: 255/255, alpha: 1)
+
+        // 削除のアクションを設定する
+        let deleteAction = UIContextualAction(style: .destructive, title:"delete") {
+            (ctxAction, view, completionHandler) in
+            memos.remove(at: indexPath.row)
+            self.memoListTable.deleteRows(at: [indexPath], with: .automatic)
+            completionHandler(true)
+            // 削除セーブ
+            let encodedMemo = try? NSKeyedArchiver.archivedData(withRootObject: memos, requiringSecureCoding: false)
+            UserDefaults.standard.set(encodedMemo, forKey: "MEMO")
+            UserDefaults.standard.synchronize()
+        }
+        // 削除ボタンのデザインを設定する
+        let trashImage = UIImage(systemName: "trash.fill")?.withTintColor(UIColor.white , renderingMode: .alwaysTemplate)
+        deleteAction.image = trashImage
+        deleteAction.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1)
+
+        // スワイプでの削除を無効化して設定する
+        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction, shareAction])
+        swipeAction.performsFirstActionWithFullSwipe = false
+       
+        return swipeAction
+
     }
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            memos.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        }
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(memos.count)
+//        print(memos.count)
         return memos.count
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = indexPath.row
-        let memo = memos[id]
-        let title = memo.title
-        let body = memo.body
-        toEditPage(title: title, body: body, id: id)
-        print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
-        tableView.deselectRow(at: indexPath, animated: true)
+        if !memoListTable.isEditing {
+            let id = indexPath.row
+            let memo = memos[id]
+            let title = memo.title
+            let body = memo.body
+            toEditPage(title: title, body: body, id: id)
+            print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
+            tableView.deselectRow(at: indexPath, animated: true)
+        } else {
+            memos.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        }
     }
 
     
@@ -60,13 +102,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if newTitle == "" {
             newTitle = "無題"
         }
-
         toEditPage(title: newTitle, body: "ここに内容を入力します", id: -1)
     }
     func toEditPage(title: String, body: String, id: Int) {
         let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "editViewController") as! EditViewController
         nextViewController.titleText = title
-        nextViewController.bodyText = body
+        nextViewController.bodyText  = body
         nextViewController.nowEditId = id
         //        nextViewController.delegate = self
         self.navigationController?.pushViewController(nextViewController, animated: true)
@@ -78,11 +119,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         memoListTable.dataSource = self
         memoListTable.delegate = self
         memoListTable.tableFooterView = UIView(frame: .zero)
+        memoListTable.allowsMultipleSelectionDuringEditing = true
+        navigationItem.rightBarButtonItem = editButtonItem
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         memoListTable?.reloadData()
+    }
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        memoListTable.isEditing = editing
+
+        print(editing)
     }
     @IBAction func backFromEdit(segue: UIStoryboardSegue) {
         memoListTable?.reloadData()
