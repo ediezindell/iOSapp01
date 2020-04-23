@@ -12,16 +12,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        // シェアのアクションを設定する
-        let shareAction = UIContextualAction(style: .normal  , title: "share") {
-            (ctxAction, view, completionHandler) in
-             print("シェアを実行する")
-            completionHandler(true)
-        }
-        // シェアボタンのデザインを設定する
-        let shareImage = UIImage(systemName: "square.and.arrow.up")?.withTintColor(UIColor.white, renderingMode: .alwaysTemplate)
-        shareAction.image = shareImage
-        shareAction.backgroundColor = UIColor(red: 0/255, green: 125/255, blue: 255/255, alpha: 1)
+//        // シェアのアクションを設定する
+//        let shareAction = UIContextualAction(style: .normal  , title: "share") {
+//            (ctxAction, view, completionHandler) in
+//             print("シェアを実行する")
+//            completionHandler(true)
+//        }
+//        // シェアボタンのデザインを設定する
+//        let shareImage = UIImage(systemName: "square.and.arrow.up")?.withTintColor(UIColor.white, renderingMode: .alwaysTemplate)
+//        shareAction.image = shareImage
+//        shareAction.backgroundColor = UIColor(red: 0/255, green: 125/255, blue: 255/255, alpha: 1)
 
         // 削除のアクションを設定する
         let deleteAction = UIContextualAction(style: .destructive, title:"delete") {
@@ -40,7 +40,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         deleteAction.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1)
 
         // スワイプでの削除を無効化して設定する
-        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction, shareAction])
+        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction])
         swipeAction.performsFirstActionWithFullSwipe = false
        
         return swipeAction
