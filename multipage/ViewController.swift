@@ -141,8 +141,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidAppear(animated)
         memoListTable?.reloadData()
         self.configureObserver()
-        if firstFocus {
+        if firstFocus && firstLaunch {
             newTitleField.becomeFirstResponder() // 選択
+            firstLaunch = false
         }
     }
     override func setEditing(_ editing: Bool, animated: Bool) {

@@ -14,6 +14,7 @@ var settingFont = "PingFangTC-Light"
 var settingFontColor = "8888FF"
 var settingFontSize = 16
 var firstFocus = false
+var firstLaunch = true
 
 class MemoObj: NSObject, NSCoding {
     var title: String
