@@ -13,6 +13,7 @@ import Foundation
 var settingFont = "PingFangTC-Light"
 var settingFontColor = "8888FF"
 var settingFontSize = 16
+var firstFocus = false
 
 class MemoObj: NSObject, NSCoding {
     var title: String
@@ -82,6 +83,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loadedSettingFontSize = UserDefaults.standard.object(forKey: "SETTING_FONT_SIZE")
         if (loadedSettingFontSize as? Int != nil) {
             settingFontSize = loadedSettingFontSize as! Int
+        }
+        let loadedFirstFocus = UserDefaults.standard.object(forKey: "FIRST_FOCUS")
+        if (loadedFirstFocus as? Bool != nil) {
+            firstFocus = (loadedFirstFocus != nil)
         }
         useSettings()
 

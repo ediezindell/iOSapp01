@@ -95,7 +95,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="memoList" id="Ubb-9P-g1J">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="dK1-8X-Jac">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" image="ellipsis" catalog="system" id="dK1-8X-Jac">
                             <connections>
                                 <segue destination="QUV-QF-o5R" kind="show" id="niA-Zp-R1D"/>
                             </connections>
@@ -493,4 +493,7 @@
             <point key="canvasLocation" x="138.40000000000001" y="137.18140929535232"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
 </document>
