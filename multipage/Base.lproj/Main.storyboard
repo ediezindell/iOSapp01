@@ -283,6 +283,37 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FirstFocusSettingCell" rowHeight="70" id="1d9-QO-cyI">
+                                        <rect key="frame" x="0.0" y="238" width="375" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1d9-QO-cyI" id="CGk-jv-KFW">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="起動時にフォーカス" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTY-XT-hYK">
+                                                    <rect key="frame" x="25" y="21" width="335" height="28"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mf-fb-U3U">
+                                                    <rect key="frame" x="311" y="19" width="51" height="32"/>
+                                                    <connections>
+                                                        <action selector="firstFocusSettingSwitch:" destination="y09-th-ta7" eventType="valueChanged" id="ePQ-yx-ak1"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="1mf-fb-U3U" secondAttribute="bottom" constant="8" id="8Cz-XF-itf"/>
+                                                <constraint firstItem="1mf-fb-U3U" firstAttribute="top" secondItem="CGk-jv-KFW" secondAttribute="topMargin" constant="8" id="MZG-Pv-MxX"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wTY-XT-hYK" secondAttribute="trailing" id="OOQ-sU-9B2"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1mf-fb-U3U" secondAttribute="trailing" id="R1n-1s-SFm"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="wTY-XT-hYK" secondAttribute="bottom" constant="10" id="T2J-m1-C6L"/>
+                                                <constraint firstItem="wTY-XT-hYK" firstAttribute="leading" secondItem="CGk-jv-KFW" secondAttribute="leadingMargin" constant="10" id="W9Y-hh-APw"/>
+                                                <constraint firstItem="wTY-XT-hYK" firstAttribute="top" secondItem="CGk-jv-KFW" secondAttribute="topMargin" constant="10" id="vTO-45-qDg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ExH-2O-l02">

@@ -35,12 +35,16 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
     // セルの中身
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell;
-        if indexPath.row == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "FontSettiingCell", for: indexPath)
-        } else if indexPath.row == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "FontColorSettiingCell", for: indexPath)
-        } else {//} if indexPath.row == 2 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "FontSizeSettiingCell", for: indexPath)
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "FontSettiingCell", for: indexPath)
+            } else if indexPath.row == 1 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "FontColorSettiingCell", for: indexPath)
+            } else {//} if indexPath.row == 2 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "FontSizeSettiingCell", for: indexPath)
+            }
+        } else {
+           cell = tableView.dequeueReusableCell(withIdentifier: "FirstFocusSettingCell", for: indexPath)
         }
 
         //各要素にはタグでアクセスする
@@ -48,18 +52,30 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
         settingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
         settingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
 
-        //各要素にはタグでアクセスする
-        let nowSettingLabel: UILabel = cell.viewWithTag(2)! as! UILabel
         // フォントサイズ
-        if indexPath.row == 2 {
-            nowSettingLabel.text = "\(settingData[indexPath.section][indexPath.row])px"
+        if indexPath.section == 0 {
+            //各要素にはタグでアクセスする
+            let nowSettingLabel: UILabel = cell.viewWithTag(2)! as! UILabel
+            if indexPath.row == 2 {
+                nowSettingLabel.text = "\(settingData[indexPath.section][indexPath.row])px"
+            } else {
+                nowSettingLabel.text = settingData[indexPath.section][indexPath.row] as? String
+            }
+            nowSettingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
+            nowSettingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
         } else {
-            nowSettingLabel.text = settingData[indexPath.section][indexPath.row] as? String
-        }
-        nowSettingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-        nowSettingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+//            if indexPath.row == 1 {
+                let nowSettingSwitch: UISwitch = cell.viewWithTag(2)! as! UISwitch
+                nowSettingSwitch.isOn = firstFocus
+            //            }
 
+        }
         return cell
+    }
+
+    @IBAction func firstFocusSettingSwitch(_ sender: UISwitch) {
+        firstFocus = sender.isOn
+        UserDefaults.standard.set(firstFocus, forKey: "FIRST_FOCUS")
     }
     // セクションの中身
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -79,7 +95,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
         super.viewDidLoad()
 //        useSettings()
         settingData[0] = [settingFont, settingFontColor, String(settingFontSize)]
-//        settingData[1] = UIFont.familyNames
+        settingData[1] = [firstFocus]
 //        UILabel.apperance().font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
 
         settingTable.frame = view.frame
