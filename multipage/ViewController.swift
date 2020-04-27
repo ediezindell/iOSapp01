@@ -82,7 +82,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //各要素にはタグでアクセスする
         let titleLabel: UILabel = cell.viewWithTag(1)! as! UILabel
         titleLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-        titleLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        titleLabel.textColor = UIColor(code: settingFontColor)
         titleLabel.text = memos[indexPath.row].title
 
         //各要素にはタグでアクセスする

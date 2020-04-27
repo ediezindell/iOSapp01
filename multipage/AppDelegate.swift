@@ -100,30 +100,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         body: "ここに内容を入力します"
         )]
 
-//        let loadedEncodedMemoData = UserDefaults.standard.object(forKey: "MEMO")
-//        var loadedMemos: [MemoObj] = []
-//        if loadedEncodedMemoData as? Data != nil {
-//            loadedMemos = NSKeyedUnarchiver.unarchiveObject(with: loadedEncodedMemoData as! Data) as! [MemoObj]
-//            memos = loadedMemos
-//        } else {
-//            let defaultMemo: MemoObj! = MemoObj(
-//                title: "タイトル",
-//                body: "ここに内容を入力します"
-//            )
-//            memos.append(defaultMemo)
-//        }
-        
         return true
     }
 
     func useSettings() {
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        UINavigationBar.appearance().barTintColor = UIColor(code: settingFontColor)
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
-        UILabel.appearance().textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        UILabel.appearance().textColor = UIColor(code: settingFontColor)
         UILabel.appearance().font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
     }
     

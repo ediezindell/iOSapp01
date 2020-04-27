@@ -50,7 +50,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
         //各要素にはタグでアクセスする
         let settingLabel: UILabel = cell.viewWithTag(1)! as! UILabel
         settingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-        settingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        settingLabel.textColor = UIColor(code: settingFontColor)
 
         // フォントサイズ
         if indexPath.section == 0 {
@@ -62,7 +62,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
                 nowSettingLabel.text = settingData[indexPath.section][indexPath.row] as? String
             }
             nowSettingLabel.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-            nowSettingLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+            nowSettingLabel.textColor = UIColor(code: settingFontColor)
         } else {
 //            if indexPath.row == 1 {
                 let nowSettingSwitch: UISwitch = cell.viewWithTag(2)! as! UISwitch
@@ -82,7 +82,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 //        let sectionLabel = UILabel()
 //
 //        sectionLabel.font = UIFont(name: settingFont, size: (sectionLabel.font.pointSize))
-//        sectionLabel.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+//        sectionLabel.textColor = UIColor(code: settingFontColor)
 //        sectionLabel.text = settingSections[section]
 //
 //        let headerView = UIView()
@@ -103,7 +103,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
         settingTable.delegate = self
         settingTable.tableFooterView = UIView(frame: .zero)
             
-//        self.hoge?.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+//        self.hoge?.textColor = UIColor(code: settingFontColor)
 //        self.hoge?.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
     }
     

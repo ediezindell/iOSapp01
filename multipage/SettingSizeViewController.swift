@@ -10,8 +10,6 @@ import UIKit
 
 class SettingSizeViewController: UIViewController {
 
-    @IBOutlet weak var colorField: UITextField!
-
     private func reDisp() {
         // スライダー
         sizeSlider.setValue(Float(settingFontSize), animated: false)
@@ -19,7 +17,7 @@ class SettingSizeViewController: UIViewController {
         nowFontSizeLabel.text = "\(settingFontSize)px"
         // プレビュー
         sizePreview.font = UIFont(name: settingFont, size: CGFloat(settingFontSize))
-        sizePreview.textColor = UIColor.colorFromRGB(rgb: settingFontColor, alpha: 1)
+        sizePreview.textColor = UIColor(code: settingFontColor)
     }
 
     override func viewDidLoad() {
