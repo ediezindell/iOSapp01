@@ -85,10 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (loadedSettingFontSize as? Int != nil) {
             settingFontSize = loadedSettingFontSize as! Int
         }
-        let loadedFirstFocus = UserDefaults.standard.object(forKey: "FIRST_FOCUS")
-        if (loadedFirstFocus as? Bool != nil) {
-            firstFocus = (loadedFirstFocus != nil)
-        }
+        let loadedFirstFocus = UserDefaults.standard.object(forKey: "FIRST_FOCUS") as! Bool
+        firstFocus = loadedFirstFocus
         useSettings()
 
         // メモデータ
@@ -106,8 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func useSettings() {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().barTintColor = UIColor(code: settingFontColor)
-//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
-//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0), NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0)!, NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: settingFont, size: 19.0)!, NSAttributedString.Key.foregroundColor: UIColor.white]
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 
         UILabel.appearance().textColor = UIColor(code: settingFontColor)

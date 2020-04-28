@@ -11,18 +11,6 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-//        // シェアのアクションを設定する
-//        let shareAction = UIContextualAction(style: .normal  , title: "share") {
-//            (ctxAction, view, completionHandler) in
-//             print("シェアを実行する")
-//            completionHandler(true)
-//        }
-//        // シェアボタンのデザインを設定する
-//        let shareImage = UIImage(systemName: "square.and.arrow.up")?.withTintColor(UIColor.white, renderingMode: .alwaysTemplate)
-//        shareAction.image = shareImage
-//        shareAction.backgroundColor = UIColor(red: 0/255, green: 125/255, blue: 255/255, alpha: 1)
-
         // 削除のアクションを設定する
         let deleteAction = UIContextualAction(style: .destructive, title:"delete") {
             (ctxAction, view, completionHandler) in
@@ -118,7 +106,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         nextViewController.titleText = title
         nextViewController.bodyText  = body
         nextViewController.nowEditId = id
-        //        nextViewController.delegate = self
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
     @IBOutlet weak var memoListTable: UITableView!
@@ -134,7 +121,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // 追加用テキストフィールド
         newTitleField.delegate = self
         // ヘッダーメニュー
-//        navigationItem.rightBarButtonItem = editButtonItem
         hideKeyboardWhenTappedAround()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -149,8 +135,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         memoListTable.isEditing = editing
-
-        print(editing)
     }
     @IBAction func backFromEdit(segue: UIStoryboardSegue) {
         memoListTable?.reloadData()
@@ -188,7 +172,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
       
     // キーボードが現れたときにviewをずらす
     @objc func keyboardWillShow(notification: Notification?) {
-//      let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
       let rect = (notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
       let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
       UIView.animate(withDuration: duration!) {

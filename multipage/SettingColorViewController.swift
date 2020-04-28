@@ -57,7 +57,7 @@ class SettingColorViewController: UIViewController {
         let test = UIColor(code: settingFontColor)
         settingFontColor = color!
         
-        print("color: \(String(describing: color))")
+//        print("color: \(String(describing: color))")
         self.performSegue(withIdentifier: "toSettingTop", sender: self)
     }
         

@@ -120,11 +120,11 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
     }
     private func selectColor() {
         self.performSegue(withIdentifier: "toColorSetting", sender: self)
-        print("now color select")
+//        print("now color select")
     }
     private func selectSize() {
         self.performSegue(withIdentifier: "toSizeSetting", sender: self)
-        print("now size select")
+//        print("now size select")
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,14 +137,14 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
             selectSize()
         }
 
-        print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
+//        print("[\(indexPath.section)][\(indexPath.row)]番目の行が選択されました。")
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // UIFontPickerViewControllerDelegate - 選択後
     func fontPickerViewControllerDidPickFont(_ fontPicker: UIFontPickerViewController) {
         if let fontName = fontPicker.selectedFontDescriptor?.postscriptName {
-            print("set FontName: \(fontName)")
+//            print("set FontName: \(fontName)")
             settingFont = fontName
             settingData[0][0] = fontName
             UserDefaults.standard.set(fontName, forKey: "SETTING_FONT")
@@ -154,7 +154,7 @@ class SettingsViewController: UIViewController, UIFontPickerViewControllerDelega
 
     // キャンセル
     func fontPickerViewControllerDidCancel(_ viewController: UIFontPickerViewController) {
-        print("Cancel")
+//        print("Cancel")
     }
 
     @IBAction func canselFromColorSetting(for unwindSegue: UIStoryboardSegue, towardsViewController subsequentVC: UIViewController) {
